@@ -1,123 +1,527 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <link rel="shortcut icon" type="image/png" href="img/favicon.png" />
-  <!-- Font Poppins -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;1,400&display=swap" rel="stylesheet">
-  <!-- Style CSS -->
-  <link rel="stylesheet" href="./styles/style.css">
-  <title>Happy Birthday!!! Jubed :)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <title>🎂 Happy Birthday Sayangku! 🎉</title>
+  
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* ========== BACKGROUND GRADASI ANIMASI ========== */
+    .animated-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      background: linear-gradient(135deg, 
+        #ff6b8b 0%, 
+        #ffb347 15%, 
+        #ffd93d 30%, 
+        #6bcb77 45%, 
+        #4d9de0 60%, 
+        #9b59b6 75%, 
+        #ff6b8b 100%);
+      background-size: 400% 400%;
+      animation: gradientMove 12s ease infinite;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* ========== BINTANG BERKEDIP ========== */
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 2s infinite ease-in-out;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.3); }
+    }
+
+    /* ========== FOTO MELAYANG ========== */
+    .floating-photo {
+      position: fixed;
+      pointer-events: none;
+      z-index: 15;
+      animation: floatUpPhoto linear forwards;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      border: 3px solid white;
+      object-fit: cover;
+    }
+
+    @keyframes floatUpPhoto {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-150px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* ========== CONFETTI / BALON KECIL ========== */
+    .confetti-piece {
+      position: fixed;
+      pointer-events: none;
+      z-index: 10;
+      animation: confettiFall linear forwards;
+    }
+
+    @keyframes confettiFall {
+      0% {
+        transform: translateY(-50px) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* ========== HATI MELAYANG ========== */
+    .floating-heart {
+      position: fixed;
+      pointer-events: none;
+      z-index: 12;
+      font-size: 30px;
+      animation: floatHeart linear forwards;
+    }
+
+    @keyframes floatHeart {
+      0% {
+        transform: translateY(100vh) scale(0.5);
+        opacity: 0;
+      }
+      20% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100px) scale(1.5);
+        opacity: 0;
+      }
+    }
+
+    /* ========== MUSIC BUTTON ========== */
+    .music-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #ff6b8b, #ffb347);
+      border: none;
+      border-radius: 50px;
+      padding: 12px 20px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 100;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      transition: transform 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .music-btn:hover {
+      transform: scale(1.05);
+    }
+
+    /* ========== SONG AUDIO ========== */
+    .song {
+      display: none;
+    }
+
+    /* ========== CONTAINER UTAMA ========== */
+    .container {
+      min-height: 100vh;
+      margin: 0 auto;
+      overflow: hidden;
+      position: relative;
+      text-align: center;
+      visibility: hidden;
+      width: 100vw;
+    }
+
+    .container > div {
+      left: 0;
+      right: 0;
+      top: 20vh;
+      position: absolute;
+    }
+
+    .one {
+      font-size: 4rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ff6b8b, #ffb347);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 20px rgba(255,107,139,0.3);
+    }
+
+    .two {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #fff;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .three {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .sub-birthday {
+      font-size: 1.2rem;
+      color: #ffd93d;
+      margin-top: 10px;
+    }
+
+    .four .text-box {
+      background: rgba(255, 255, 255, 0.95);
+      border: 3px solid #ffd700;
+      border-radius: 30px;
+      margin: 0 auto;
+      padding: 20px;
+      position: relative;
+      width: 600px;
+      max-width: 90%;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+
+    .text-box p {
+      margin: 0;
+      text-align: left;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .text-box span {
+      visibility: hidden;
+    }
+
+    .text-box .fake-btn {
+      background: linear-gradient(95deg, #ff6b8b, #ffb347);
+      border-radius: 50px;
+      bottom: -20px;
+      right: 20px;
+      position: absolute;
+      color: #fff;
+      padding: 8px 20px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: transform 0.3s;
+    }
+
+    .text-box .fake-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .five p {
+      font-size: 1.5rem;
+      position: absolute;
+      left: 0;
+      right: 0;
+      font-weight: 500;
+      color: #fff;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .idea-3 strong {
+      border-radius: 10px;
+      display: inline-block;
+      padding: 5px 12px;
+      background: #ff6b8b;
+      color: white;
+    }
+
+    .idea-5 {
+      font-size: 2.5rem !important;
+      font-weight: 700;
+      color: #ffd93d !important;
+    }
+
+    .idea-5 span,
+    .idea-6 span,
+    .wish-hbd span {
+      display: inline-block;
+    }
+
+    .idea-6 span {
+      font-size: 8rem;
+      font-weight: 800;
+      color: #ffd700;
+    }
+
+    .six {
+      position: relative;
+      top: 15vh;
+      z-index: 1;
+    }
+
+    .six img {
+      display: inline-block;
+      height: 300px;
+      max-width: 90%;
+      border-radius: 30px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      border: 5px solid white;
+    }
+
+    .six .hat {
+      position: absolute;
+      /* left: 41%;
+      top: -15%;
+      width: 60px; */
+      rotate: 14deg;
+    }
+
+    .ballons img {
+      display: inline-block;
+      position: absolute;
+      width: 50px;
+    }
+
+    .ballons img:nth-child(even) {
+      left: -10%;
+    }
+
+    .ballons img:nth-child(odd) {
+      right: -10%;
+    }
+
+    .ballons img:nth-child(3n + 0) {
+      left: 30%;
+    }
+
+    .eight svg {
+      left: 0;
+      position: absolute;
+      top: 0;
+      visibility: hidden;
+      width: 25px;
+      z-index: -1;
+    }
+
+    .eight svg circle {
+      fill: #ff6b8b;
+    }
+
+    .wish-hbd {
+      font-size: 3em;
+      margin: 20px 0 10px;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: #ff6b8b;
+    }
+
+    .wish h5 {
+      font-size: 1.2rem;
+      font-weight: 500;
+      margin: 10px 0 0;
+      color: #fff;
+      line-height: 1.6;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    }
+
+    .nine p {
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: #fff;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    #replay {
+      cursor: pointer;
+      z-index: 3;
+      color: #ffd93d;
+      font-weight: 600;
+    }
+
+    .last-smile {
+      font-size: 3rem;
+    }
+
+    @media screen and (max-width: 500px) {
+      .container {
+        width: 100%;
+        padding: 0 10px;
+      }
+      .four .text-box {
+        width: 90%;
+      }
+      .text-box .fake-btn {
+        bottom: -25px;
+        right: 10px;
+        font-size: 0.8rem;
+      }
+      .idea-5 {
+        font-size: 1.5rem !important;
+      }
+      .idea-6 span {
+        font-size: 3rem;
+      }
+      .six .hat {
+        width: 40px;
+        left: 35%;
+      }
+      .wish-hbd {
+        font-size: 1.8em;
+      }
+      .wish h5 {
+        font-size: 0.8rem;
+      }
+      .nine p {
+        font-size: 1rem;
+      }
+      .one {
+        font-size: 2.5rem;
+      }
+      .three {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-  <audio class="song" loop autoplay>
-    <source src="./music/hbd.mp3">
-    </source>
-    Your browser isn't invited for super fun audio time.
+  <!-- Background animasi -->
+  <div class="animated-bg"></div>
+  <div class="stars" id="stars"></div>
+
+  <audio class="song" loop id="bgMusic">
+    <source src="./music/hbd.mp3" type="audio/mpeg">
   </audio>
+
+  <button class="music-btn" id="musicToggle">
+    <span>🎵</span> Putar Musik
+  </button>
 
   <div class="container">
 
     <div class="one">
       <h1 class="one">
-        Hi!👋🏼 <span id="name">Jubed</span> <!-- Ganti ini jadi nama yang ultah -->
+        🎈 Hi! <span id="name">Sayangku</span> 🎈
       </h1>
-      <p class="two" id="greetingText">I really like your name btw! It's so unique and beautiful, just like you!</p>
+      <p class="two" id="greetingText">Kamu orang paling spesial di hidupku! ❤️</p>
     </div>
 
     <div class="three">
-      <p>It's your birthday!! 🎂</p>
+      <p>🎂 Happy Birthday to You! 🎂</p>
+      <p class="sub-birthday">✨ Today is all about YOU ✨</p>
     </div>
 
     <div class="four">
       <div class="text-box">
         <p class="hbd-chatbox">
-          I hope you have a great day today, and the year ahead is full of many blessings. May all your wishes come
-          true!
+          Semoga hari-harimu selalu dipenuhi kebahagiaan, cinta, dan senyuman indahmu. 
+          Semua impianmu semoga tercapai ya sayang! 💫
         </p>
         <p class="fake-btn">
-          Send your wishes ✨
+          Klik untuk kirim wishes 💝
         </p>
       </div>
     </div>
 
     <div class="five">
       <p class="idea-1">
-        That's what I was going to do.
+        Awalnya aku cuma mau ngucapin biasa aja.
       </p>
       <p class="idea-2">
-        But then I stopped. I thought, <br /> "Why not make something special for her?"
+        Tapi aku mikir, <br /> "Kenapa enggak bikin sesuatu yang spesial buat kamu?"
       </p>
       <p class="idea-3">
-        I realised, I wanted to do something different. <br />
-        <strong>Something that would make you smile and feel special.</strong>
+        Aku sadar, aku mau bikin sesuatu yang berbeda. <br />
+        <strong>Yang bikin kamu tersenyum dan merasa istimewa.</strong>
       </p>
-      <p class="idea-4">Because,</p>
+      <p class="idea-4">Karena,</p>
       <p class="idea-5">
-        You are special to me.
-        <span>😊</span>
+        Kamu istimewa buat aku.
+        <span>❤️</span>
       </p>
       <p class="idea-6">
         <span>S</span>
-        <span>O</span>
+        <span>E</span>
+        <span>L</span>
+        <span>A</span>
+        <span>M</span>
+        <span>A</span>
+        <span>N</span>
+        <span>Y</span>
+        <span>A</span>
       </p>
     </div>
 
     <div class="six">
-      <img src="./img/ayang.png" alt="Ayanggg" class="profile-picture" id="imagePath" />
-      <img src="img/hat.svg" alt="Hat" class="hat" />
+      <img src="./img/foto6.jpeg" alt="Foto Ayang" class="profile-picture" id="imagePath" />
+      <!-- <img src="img/hat.svg" alt="Topi Ulang Tahun" class="hat" /> -->
       <div class="wish">
         <h3 class="wish-hbd">Happy Birthday!</h3>
         <h5 class="wish-text">
-          "Happy Birthday, Ayanggg! Wishing you a day as beautiful as you are. <br /> Lots of love and hugs on your
-          special
-          day!"
+          "Selamat Ulang Tahun, Sayangku! 🌸 <br />
+          Semoga di usia baru ini, kamu makin bahagia dan makin cantik! <br />
+          Lots of love for you today and always! 💕"
         </h5>
       </div>
     </div>
 
     <div class="seven">
       <div class="ballons">
-        <img src="img/ballon2.svg" alt="Ballon" />
-        <img src="img/ballon1.svg" alt="Ballon" />
-        <img src="img/ballon3.svg" alt="Ballon" />
-        <img src="img/ballon2.svg" alt="Ballon" />
-        <img src="img/ballon1.svg" alt="Ballon" />
-        <img src="img/ballon3.svg" alt="Ballon" />
-        <img src="img/ballon2.svg" alt="Ballon" />
-        <img src="img/ballon1.svg" alt="Ballon" />
-        <img src="img/ballon3.svg" alt="Ballon" />
-        <img src="img/ballon2.svg" alt="Ballon" />
-        <img src="img/ballon1.svg" alt="Ballon" />
-        <img src="img/ballon3.svg" alt="Ballon" />
-        <img src="img/ballon2.svg" alt="Ballon" />
-        <img src="img/ballon1.svg" alt="Ballon" />
-        <img src="img/ballon3.svg" alt="Ballon" />
-        <img src="img/ballon2.svg" alt="Ballon" />
-        <img src="img/ballon1.svg" alt="Ballon" />
-        <img src="img/ballon3.svg" alt="Ballon" />
-        <img src="img/ballon2.svg" alt="Ballon" />
-        <img src="img/ballon1.svg" alt="Ballon" />
-        <img src="img/ballon3.svg" alt="Ballon" />
-        <img src="img/ballon2.svg" alt="Ballon" />
-        <img src="img/ballon1.svg" alt="Ballon" />
-        <img src="img/ballon3.svg" alt="Ballon" />
-        <img src="img/ballon2.svg" alt="Ballon" />
-        <img src="img/ballon1.svg" alt="Ballon" />
-        <img src="img/ballon3.svg" alt="Ballon" />
-        <img src="img/ballon2.svg" alt="Ballon" />
-        <img src="img/ballon1.svg" alt="Ballon" />
-        <img src="img/ballon3.svg" alt="Ballon" />
-        <img src="img/ballon2.svg" alt="Ballon" />
-        <img src="img/ballon1.svg" alt="Ballon" />
-        <img src="img/ballon3.svg" alt="Ballon" />
+        <img src="img/ballon2.svg" alt="Balon" />
+        <img src="img/ballon1.svg" alt="Balon" />
+        <img src="img/ballon3.svg" alt="Balon" />
+        <img src="img/ballon2.svg" alt="Balon" />
+        <img src="img/ballon1.svg" alt="Balon" />
+        <img src="img/ballon3.svg" alt="Balon" />
+        <img src="img/ballon2.svg" alt="Balon" />
+        <img src="img/ballon1.svg" alt="Balon" />
+        <img src="img/ballon3.svg" alt="Balon" />
+        <img src="img/ballon2.svg" alt="Balon" />
+        <img src="img/ballon1.svg" alt="Balon" />
+        <img src="img/ballon3.svg" alt="Balon" />
       </div>
     </div>
 
@@ -137,34 +541,239 @@
       <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
         <circle cx="20" cy="20" r="20" />
       </svg>
-      <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="20" cy="20" r="20" />
-      </svg>
-      <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="20" cy="20" r="20" />
-      </svg>
-      <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="20" cy="20" r="20" />
-      </svg>
-      <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="20" cy="20" r="20" />
-      </svg>
     </div>
 
     <div class="nine">
-      <p>Okay, now come back and tell me if you liked it.</p>
+      <p>Oke, sekarang bilang aku ya, kamu suka nggak? 🥰</p>
       <p id="replay">
-        Or you can click here it if you want to see it again.
+        Atau klik di sini kalau mau lihat animasinya lagi 🎬
       </p>
-      <p class="last-smile">😊</p>
+      <p class="last-smile">😊💖</p>
     </div>
   </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script>
+    (function() {
+      // ========== BINTANG BERKEDIP ==========
+      function createStars() {
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 150; i++) {
+          const star = document.createElement('div');
+          star.className = 'star';
+          star.style.width = Math.random() * 4 + 1 + 'px';
+          star.style.height = star.style.width;
+          star.style.left = Math.random() * 100 + '%';
+          star.style.top = Math.random() * 100 + '%';
+          star.style.animationDelay = Math.random() * 3 + 's';
+          star.style.animationDuration = 1 + Math.random() * 2 + 's';
+          starsContainer.appendChild(star);
+        }
+      }
+      createStars();
+
+      // ========== FOTO MELAYANG ==========
+      // Daftar foto (ganti dengan foto-foto kamu)
+      const photoList = [
+        './img/foto1.jpg',  // foto utama
+        './img/foto2.jpg',  // bisa ganti dengan foto lain
+        './img/foto3.jpg',  // bisa ganti dengan foto lain
+        './img/foto4.jpg',  // bisa ganti dengan foto lain
+        './img/foto5.jpg'   // bisa ganti dengan foto lain
+      ];
+      
+      function createFloatingPhoto() {
+        const img = document.createElement('img');
+        img.src = photoList[Math.floor(Math.random() * photoList.length)];
+        img.className = 'floating-photo';
+        
+        const size = 80 + Math.random() * 60;
+        img.style.width = size + 'px';
+        img.style.height = size + 'px';
+        img.style.left = Math.random() * 100 + '%';
+        img.style.animationDuration = 6 + Math.random() * 5 + 's';
+        img.style.animationDelay = Math.random() * 3 + 's';
+        
+        document.body.appendChild(img);
+        setTimeout(() => img.remove(), 11000);
+      }
+
+      // ========== CONFETTI ==========
+      const confettiColors = ['#ff6b8b', '#ffb347', '#ffd93d', '#6bcb77', '#4d9de0', '#9b59b6'];
+      
+      function createConfetti() {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti-piece';
+        confetti.style.width = 8 + Math.random() * 12 + 'px';
+        confetti.style.height = 8 + Math.random() * 12 + 'px';
+        confetti.style.backgroundColor = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+        confetti.style.left = Math.random() * 100 + '%';
+        confetti.style.animationDuration = 3 + Math.random() * 3 + 's';
+        confetti.style.animationDelay = Math.random() * 2 + 's';
+        confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 6000);
+      }
+
+      // ========== HATI MELAYANG ==========
+      const hearts = ['❤️', '💖', '💗', '💓', '💕', '💝', '💘'];
+      
+      function createFloatingHeart() {
+        const heart = document.createElement('div');
+        heart.className = 'floating-heart';
+        heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+        heart.style.left = Math.random() * 100 + '%';
+        heart.style.fontSize = 20 + Math.random() * 30 + 'px';
+        heart.style.animationDuration = 5 + Math.random() * 4 + 's';
+        heart.style.animationDelay = Math.random() * 2 + 's';
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 9000);
+      }
+
+      // ========== BALON MELAYANG ==========
+      const balloons = ['🎈', '🎈', '🎈', '🎈', '🎈'];
+      
+      function createFloatingBalloon() {
+        const balloon = document.createElement('div');
+        balloon.className = 'floating-heart';
+        balloon.innerHTML = balloons[Math.floor(Math.random() * balloons.length)];
+        balloon.style.left = Math.random() * 100 + '%';
+        balloon.style.fontSize = 25 + Math.random() * 35 + 'px';
+        balloon.style.animationDuration = 6 + Math.random() * 5 + 's';
+        balloon.style.animationDelay = Math.random() * 2 + 's';
+        document.body.appendChild(balloon);
+        setTimeout(() => balloon.remove(), 11000);
+      }
+
+      // ========== JALANKAN SEMUA DEKORASI ==========
+      // Foto melayang (setiap 4 detik)
+      setInterval(() => {
+        for (let i = 0; i < 2; i++) createFloatingPhoto();
+      }, 4000);
+      
+      // Confetti (setiap 2 detik)
+      setInterval(() => {
+        for (let i = 0; i < 5; i++) createConfetti();
+      }, 2000);
+      
+      // Hati melayang (setiap 1.5 detik)
+      setInterval(() => {
+        for (let i = 0; i < 3; i++) createFloatingHeart();
+      }, 1500);
+      
+      // Balon melayang (setiap 2.5 detik)
+      setInterval(() => {
+        for (let i = 0; i < 2; i++) createFloatingBalloon();
+      }, 2500);
+
+      // Buat initial burst
+      for (let i = 0; i < 20; i++) {
+        setTimeout(() => createFloatingPhoto(), i * 200);
+        setTimeout(() => createConfetti(), i * 100);
+        setTimeout(() => createFloatingHeart(), i * 150);
+      }
+
+      // ========== MUSIK TOGGLE ==========
+      const music = document.getElementById('bgMusic');
+      const musicBtn = document.getElementById('musicToggle');
+      let isPlaying = false;
+      
+      musicBtn.addEventListener('click', () => {
+        if (isPlaying) {
+          music.pause();
+          musicBtn.innerHTML = '<span>🎵</span> Putar Musik';
+          isPlaying = false;
+        } else {
+          music.play().catch(e => console.log('Autoplay error'));
+          musicBtn.innerHTML = '<span>🔊</span> Hentikan Musik';
+          isPlaying = true;
+        }
+      });
+
+      // ========== ANIMASI UTAMA ==========
+      gsap.to(".container", { visibility: "visible", duration: 0 });
+      
+      Swal.fire({
+        title: "🎵 Mau putar musik latar? 🎵",
+        text: "Biar makin meriah ultahnya!",
+        icon: "question",
+        background: "linear-gradient(145deg, #fff0e0, #ffe6f5)",
+        showCancelButton: true,
+        confirmButtonColor: "#ff6b8b",
+        cancelButtonColor: "#c0c0c0",
+        confirmButtonText: "💖 Ya, putar musiknya! 💖",
+        cancelButtonText: "Nggak usah"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          music.play().catch(e => console.log("Autoplay blocked"));
+          musicBtn.innerHTML = '<span>🔊</span> Hentikan Musik';
+          isPlaying = true;
+        }
+        animationTimeline();
+      });
+      
+      function animationTimeline() {
+        const textBoxChars = document.getElementsByClassName("hbd-chatbox")[0];
+        const hbd = document.getElementsByClassName("wish-hbd")[0];
+        
+        if (textBoxChars) {
+          textBoxChars.innerHTML = `<span>${textBoxChars.innerHTML.split("").join("</span><span>")}</span>`;
+        }
+        if (hbd) {
+          hbd.innerHTML = `<span>${hbd.innerHTML.split("").join("</span><span>")}</span>`;
+        }
+        
+        const ideaTextTrans = { opacity: 0, y: -20, rotationX: 5, skewX: "15deg" };
+        const ideaTextTransLeave = { opacity: 0, y: 20, rotationY: 5, skewY: "-15deg" };
+        
+        const tl = new TimelineMax();
+        
+        tl.to(".container", 0.6, { visibility: "visible" })
+          .from(".one", 0.7, { opacity: 0, y: 10 })
+          .from(".two", 0.4, { opacity: 0, y: 10 })
+          .to(".one", 0.7, { opacity: 0, y: 10 }, "+=3.5")
+          .to(".two", 0.7, { opacity: 0, y: 10 }, "-=1")
+          .from(".three", 0.7, { opacity: 0, y: 10 })
+          .to(".three", 0.7, { opacity: 0, y: 10 }, "+=3")
+          .from(".four", 0.7, { scale: 0.2, opacity: 0 })
+          .from(".fake-btn", 0.3, { scale: 0.2, opacity: 0 })
+          .staggerTo(".hbd-chatbox span", 1.5, { visibility: "visible" }, 0.05)
+          .to(".fake-btn", 0.1, { backgroundColor: "rgb(255, 107, 139)" }, "+=4")
+          .to(".four", 0.5, { scale: 0.2, opacity: 0, y: -150 }, "+=1")
+          .from(".idea-1", 0.7, ideaTextTrans)
+          .to(".idea-1", 0.7, ideaTextTransLeave, "+=2.5")
+          .from(".idea-2", 0.7, ideaTextTrans)
+          .to(".idea-2", 0.7, ideaTextTransLeave, "+=2.5")
+          .from(".idea-3", 0.7, ideaTextTrans)
+          .to(".idea-3 strong", 0.5, { scale: 1.1, x: 10, backgroundColor: "rgb(255, 107, 139)", color: "#fff" })
+          .to(".idea-3", 0.7, ideaTextTransLeave, "+=2.5")
+          .from(".idea-4", 0.7, ideaTextTrans)
+          .to(".idea-4", 0.7, ideaTextTransLeave, "+=2.5")
+          .from(".idea-5", 0.7, { rotationX: 15, rotationZ: -10, skewY: "-5deg", y: 50, z: 10, opacity: 0 }, "+=1.5")
+          .to(".idea-5 span", 0.7, { rotation: 90, x: 8 }, "+=1.4")
+          .to(".idea-5", 0.7, { scale: 0.2, opacity: 0 }, "+=2")
+          .staggerFrom(".idea-6 span", 0.8, { scale: 3, opacity: 0, rotation: 15, ease: Expo.easeOut }, 0.2)
+          .staggerTo(".idea-6 span", 0.8, { scale: 3, opacity: 0, rotation: -15, ease: Expo.easeOut }, 0.2, "+=1.5")
+          .staggerFromTo(".ballons img", 2.5, { opacity: 0.9, y: 1400 }, { opacity: 1, y: -1000 }, 0.2)
+          .from(".profile-picture", 0.5, { scale: 3.5, opacity: 0, x: 25, y: -25, rotationZ: -45 }, "-=2")
+          .from(".hat", 0.5, { x: -100, y: 350, rotation: -180, opacity: 0 })
+          .staggerFrom(".wish-hbd span", 0.7, { opacity: 0, y: -50, rotation: 150, skewX: "30deg", ease: Elastic.easeOut.config(1, 0.5) }, 0.1)
+          .staggerFromTo(".wish-hbd span", 0.7, { scale: 1.4, rotationY: 150 }, { scale: 1, rotationY: 0, color: "#ff69b4", ease: Expo.easeOut }, 0.1, "party")
+          .from(".wish h5", 0.5, { opacity: 0, y: 10, skewX: "-15deg" }, "party")
+          .staggerTo(".eight svg", 1.5, { visibility: "visible", opacity: 0, scale: 80, repeat: 3, repeatDelay: 1.4 }, 0.3)
+          .to(".six", 0.5, { opacity: 0, y: 30, zIndex: "-1" })
+          .staggerFrom(".nine p", 1, ideaTextTrans, 1.2)
+          .to(".last-smile", 0.5, { rotation: 90 }, "+=1");
+        
+        const replyBtn = document.getElementById("replay");
+        if (replyBtn) {
+          replyBtn.addEventListener("click", () => { tl.restart(); });
+        }
+      }
+    })();
+  </script>
 </body>
-<!-- GSAP -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
-<!-- SweetAlert -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<!-- Main JS -->
-<script type="application/javascript" src="./scripts/birthday.js"></script>
 
 </html>

@@ -1,36 +1,212 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Font Poppins -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;1,400&display=swap" rel="stylesheet">
-  <!-- Style CSS -->
-  <link rel="stylesheet" href="./styles/style.css">
-  <title>Halaman Login</title>
+  <title>🎂 Happy Birthday Login 🎈</title>
+  
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- SweetAlert -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 50%, #fad0c4 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    /* Container login */
+    .login_container {
+      background: white;
+      border-radius: 30px;
+      padding: 40px 35px;
+      max-width: 450px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      border: 3px solid #ffd700;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      color: #ff6b8b;
+      margin-bottom: 25px;
+    }
+
+    .login_form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .login_form input {
+      width: 100%;
+      padding: 14px 18px;
+      font-size: 1rem;
+      font-family: 'Poppins', sans-serif;
+      border: 2px solid #ffccd5;
+      border-radius: 50px;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    .login_form input:focus {
+      border-color: #ff6b8b;
+    }
+
+    button {
+      background: linear-gradient(135deg, #ff6b8b, #ffb347);
+      border: none;
+      padding: 14px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border-radius: 50px;
+      color: white;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      transform: scale(1.02);
+      opacity: 0.9;
+    }
+
+    .login_description {
+      background: #fff0f3;
+      border-radius: 20px;
+      padding: 12px;
+      margin-top: 20px;
+      font-size: 0.8rem;
+      color: #b14b6b;
+    }
+
+    .birthday-badge {
+      margin-top: 15px;
+      font-size: 0.8rem;
+      color: #ff6b8b;
+      font-weight: 600;
+    }
+    /* ================= TAMBAHAN RESPONSIVE (TIDAK MENGUBAH KODE ASLI) ================= */
+@media (max-width: 480px) {
+  body {
+    padding: 10px;
+    align-items: flex-start; /* biar aman kalau keyboard muncul */
+  }
+
+  .login_container {
+    padding: 25px 20px !important;
+    border-radius: 20px !important;
+  }
+
+  h2 {
+    font-size: 1.4rem !important;
+  }
+
+  .login_form input {
+    font-size: 0.9rem !important;
+    padding: 12px 14px !important;
+  }
+
+  button {
+    font-size: 1rem !important;
+    padding: 12px !important;
+  }
+
+  .login_description {
+    font-size: 0.75rem !important;
+  }
+
+  .birthday-badge {
+    font-size: 0.75rem !important;
+  }
+}
+  </style>
 </head>
-
 <body>
-  <div class="login_container">
-    <h2>Hi👋🏼 Ayangg login dulu yuk</h2>
-    <form id="loginForm" class="login_form">
-      <input type="text" id="username" placeholder="Username" />
-      <input type="password" id="password" placeholder="Password" />
-      <button type="submit" id="loginBtn">Login</button>
-    </form>
-    <p class="login_description">
-      pssstttt, usernamenya isi "user" dan passwordnya sama dengan usernamenya ya
-    </p>
-  </div>
-</body>
-<!-- GSAP -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
-<!-- SweetAlery -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<!-- Main JS -->
-<script type="application/javascript" src="./scripts/index.js"></script>
 
+<div class="login_container">
+  <h2>🎉 Hi Ayangg! Login dulu yuk 🎂</h2>
+  
+  <form id="loginForm" class="login_form">
+    <input type="text" id="username" placeholder="Username (nama kita tanpa spasi)" autocomplete="off" />
+    <input type="password" id="password" placeholder="Password (tanggal pertama chat)" />
+    <button type="submit">🎁 Login & Lihat Kejutan 🎈</button>
+  </form>
+  
+  <div class="login_description">
+    💌 <strong>Petunjuk:</strong> username = nama kita gapake spasi , password = nama anak kita
+  </div>
+  <div class="birthday-badge">
+    ✨ Selamat Ulang Tahun Sayang! ✨
+  </div>
+</div>
+
+<script>
+  // ========== DATA LOGIN (TIDAK PEDULI BESAR KECIL HURUF) ==========
+  const VALID_USERNAME = "gibrantiyah";      // username: GibranTiyah
+  const VALID_PASSWORD = "lokimoli";         // password: LokiMoli
+  
+  // ========== AMBIL ELEMEN ==========
+  const form = document.getElementById('loginForm');
+  const usernameInput = document.getElementById('username');
+  const passwordInput = document.getElementById('password');
+  
+  // ========== CEK APAKAH ELEMEN KETEMU ==========
+  console.log("✅ Form ditemukan:", form);
+  console.log("✅ Username input ditemukan:", usernameInput);
+  console.log("✅ Password input ditemukan:", passwordInput);
+  
+  // ========== EVENT SUBMIT ==========
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Ambil nilai dan ubah ke huruf kecil semua (case insensitive)
+    const username = usernameInput.value.trim().toLowerCase();
+    const password = passwordInput.value.trim().toLowerCase();
+    
+    console.log("Username yang dimasukkan:", username);
+    console.log("Password yang dimasukkan:", password);
+    console.log("Username yang benar:", VALID_USERNAME);
+    console.log("Password yang benar:", VALID_PASSWORD);
+    
+    // CEK LOGIN (case insensitive)
+    if (username === VALID_USERNAME && password === VALID_PASSWORD) {
+      // LOGIN SUKSES
+      Swal.fire({
+        icon: 'success',
+        title: '🎉 Yeay Berhasil! 🎉',
+        text: 'Selamat datang sayangku! Ayo lihat kejutan spesialnya 💖',
+        confirmButtonColor: '#ff6b8b',
+        confirmButtonText: '💝 Yuk Lihat 💝'
+      }).then(() => {
+        window.location.href = "birthday.html";
+      });
+    } else {
+      // LOGIN GAGAL
+      Swal.fire({
+        icon: 'error',
+        title: '😢 Login Gagal',
+        text: 'Coba cek lagi ya! Username: GibranTiyah , Password: LokiMoli',
+        confirmButtonColor: '#ff6b8b',
+        confirmButtonText: 'Coba Lagi 🎈'
+      });
+    }
+  });
+</script>
+
+</body>
 </html>
